@@ -59,14 +59,27 @@ firebase.initializeApp({
 
 app.route('/')
     .get(function(req, res) {
-        res.render('home')
+        pool.query('SELECT * from resep')
+            .then((result) => {
+                var hasil = result.rows
+                console.log('Hasil:', hasil);
+
+                res.render('home', {
+                    data: hasil 
+                })
+            })
+            .catch((err) => {
+                console.error('error running query', err);
+            });
 
         // Check Cookies
-        console.log('Cookies: ', req.cookies)
+        console.log('Cookies: ', req.cookies) 
     })
     .post(function(req, res) {
 
     })
+
+
 
 app.route('/resepmu')
     .get(function(req, res) {
@@ -75,6 +88,7 @@ app.route('/resepmu')
     .post(function(req, res) {
 
     })
+
 
 app.route('/signup')
     .get(function(req, res) {
@@ -127,10 +141,10 @@ app.route('/signin')
     .post(function(req, res) {
         var email = req.body.email
         var password = req.body.password
-        var remember = req.body.remember
+        // var remember = req.body.remember
         var expired = 6000 * 10000
 
-        console.log(email + ' ' + password + ' ' + remember)
+        console.log(email + ' ' + password + ' ' + ' ')
 
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(function(result) {
@@ -170,6 +184,30 @@ app.route('/admin')
     .post(function(req, res) {
         
     })
+
+
+
+app.route('/delete_resep')
+    .get(function(req, res){
+        var ID = req.query.id
+        console.log('ID: ', ID)
+
+        pool.query('DELETE FROM resep WHERE id=($1)', [ID])
+            .then((result) => {
+                var hasil = result.rows
+                console.log('number:', hasil);
+
+                res.redirect('/admin')
+            })
+            .catch((err) => {
+                console.error('error running query', err);
+            });
+
+    })
+    .post(function(req, res){
+
+    })
+
 
 
 
