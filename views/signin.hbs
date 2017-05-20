@@ -31,7 +31,7 @@
                         <h3 class="panel-title" style="color:#fff">Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" action="/signin" method="post">
                             <fieldset>
                                 <div class="form-group" style="padding-top:10px">
                                     <input class="form-control" placeholder="E-mail" name="email" type="email" style="color:#6389a8; border-color:#6389a8" autofocus>
@@ -45,7 +45,7 @@
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a href="dashboard.html" class="btn btn-sm btn-success btn-block" style="font-size:16px; font-weight:500">Login</a>
+                                <input class="btn btn-sm btn-success btn-block" type="submit" style="font-size:16px; font-weight:500" value="Login">
                             </fieldset>
                         </form>
                     </div>

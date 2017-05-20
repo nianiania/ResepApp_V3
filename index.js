@@ -56,6 +56,9 @@ firebase.initializeApp({
 app.route('/')
     .get(function(req, res) {
         res.render('home')
+
+        // Check Cookies
+        console.log('Cookies: ', req.cookies)
     })
     .post(function(req, res) {
 
@@ -87,7 +90,7 @@ app.route('/signup')
             signup();
         }
 
-        function signup(){
+        function signup() {
             firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then(function(result) {
                     console.log('Emailnya:', result.email)
@@ -109,7 +112,7 @@ app.route('/signup')
                 .catch((err) => {
                     var errorCode = error.code;
                     var errorMessage = error.message;
-                        res.send(errorMessage)
+                    res.send(errorMessage)
                 })
         }
     })
@@ -118,14 +121,59 @@ app.route('/signin')
         res.render('signin')
     })
     .post(function(req, res) {
+        var email = req.body.email
+        var password = req.body.password
+        var remember = req.body.remember
+        var expired = 6000 * 10000
 
+        console.log(email + ' ' + password + ' ' + remember)
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(function(result) {
+                console.log('Success auth: ', result.email);
+                res.cookie('uid_token', result.uid, { maxAge: expired });
+                // res.redirect('/');
+                res.send("sukses login");
+            }).catch(function(error) {
+                console.log("Error Loggin In User :", error.message);
+            });
     })
 
+
+app.route('/signout')
+    .get(function(req, res) {
+
+
+    })
+    .post(function(req, res) {
+        console.log(req.cookies.uid_token)
+
+        firebase.auth().signOut()
+            .then(() => {
+                console.log('Successfully Signout ');
+                res.clearCookie('uid_token');
+                res.redirect('/');
+            }, (error) => {
+                console.log(error);
+            })
+    })
+
+
+
+app.route('/clear_cookies')
+    .get(function(req, res, next) {
+        res.clearCookie('uid_token')
+        res.json({ message: 'success clear cookies' })
+    });
+
+
+
+
 //=============webserver============================
-app.listen(4000, function(){
+app.listen(4000, function() {
     pool
         .query('CREATE TABLE IF NOT EXISTS resep(id SERIAL PRIMARY KEY, nama_resep VARCHAR(40) not null, deskripsi VARCHAR(70) not null, penulis VARCHAR(40) not null, cara_pembuatan VARCHAR(700) not null)')
-        .then(function(){
+        .then(function() {
             console.log('Table resep is exist!')
         })
     pool
@@ -133,7 +181,5 @@ app.listen(4000, function(){
         .then(function() {
             console.log('Table db_user is exist!')
         })
-        console.log('Server is listening on 4000 and Table is exist!')
+    console.log('Server is listening on 4000 and Table is exist!')
 })
-
-
