@@ -31,13 +31,13 @@
                         <h3 class="panel-title" style="color:#fff">Sign Up</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" action="/signup" method="post">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="First name" name="email" type="email" style="color:#6389a8; border-color:#6389a8" autofocus>
+                                    <input class="form-control" placeholder="First name" name="first_name" type="text" style="color:#6389a8; border-color:#6389a8" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Last name" name="email" type="email" style="color:#6389a8; border-color:#6389a8" autofocus>
+                                    <input class="form-control" placeholder="Last name" name="last_name" type="text" style="color:#6389a8; border-color:#6389a8" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Email" name="email" type="email" style="color:#6389a8; border-color:#6389a8" autofocus>
@@ -46,30 +46,18 @@
                                     <input class="form-control" placeholder="Password" name="password" type="password" style="color:#6389a8; border-color:#6389a8" value="">
                                 </div>
                                 <div class="form-group" style="padding-bottom:20px">
-                                    <input class="form-control" placeholder="Confirm Password" name="password" type="password" value="" style="color:#6389a8; border-color:#6389a8">
+                                    <input class="form-control" placeholder="Confirm Password" name="confirm_password" type="password" value="" style="color:#6389a8; border-color:#6389a8">
                                 </div>
-<!--
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="vendor" type="checkbox" value="vendor">Register as a Vendor
-                                    </label>
-                                </div>
--->
-                                <!-- <select class="form-control input-sm" style="width:50%">
-                                    <option value="">Set Category </option>
-                                    <option value="traveller">Traveller</option>
-                                    <option value="vendor">Vendor</option>
-                                </select> -->
-                                <!-- <br/><br/> -->
+<!-- <br/><br/> -->
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a href="login.html" class="btn btn-sm btn-success btn-block" style="font-size:16px; font-weight:500">Sign up</a> 
+                                {{!-- <a href="login.html" class="btn btn-sm btn-success btn-block" style="font-size:16px; font-weight:500">Sign up</a>  --}}
+                                <input class="btn btn-sm btn-success btn-block" type="submit" style="font-size:16px; font-weight:500" value="Submit">
                             </fieldset>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
-        
+        </div>        
         
 <!--
         <br/>
