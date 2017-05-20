@@ -1,0 +1,69 @@
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Resep App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">  
+            <li><a href="/add_resep">Add Resep</a></li> 
+            <li><a href="/signout">Sign Out</a></li>
+          </ul> 
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-12">
+            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+              <div class="btn-group" role="group">
+                <a href="#" type="button" class="btn btn-default active" style="color:#f76707; font-weight:bold">Resep List</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a href="/add_resep" type="button" class="btn btn-default" style="color:#ffa800; font-weight:bold">Add New Resep</a>
+              </div> 
+            </div>
+          </div> 
+          <div class="col-sm-12"><br/><br/> 
+            <div class=bs-example data-example-id=bordered-table>
+              <table class="table table-bordered">
+                <thead style="background-color:#e9ecef">
+                  <tr>
+                    <th>No.</th>
+                    <th>Resep Name</th>
+                    <th>Deskripsi</th>
+                    <th>Penulis</th>
+                    <th>Cara Pembuatan</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each data}}  
+                    <tr>
+                      <td style="font-size:10px" scope=row>{{@index}}.</th>
+                      <td style="font-size:10px">{{nama_resep}}</td>
+                      <td style="font-size:10px">{{deskripsi}}</td> 
+                      <td style="font-size:10px">{{penulis}}</td>
+                      <td style="font-size:10px">{{cara_pembuatan}}</td>  
+                      <td style="font-size:5px"><img src="{{image}}" style="width:80px" class="img-rounded"></td>
+                      <td>
+                        <a href="#" style="color:#4dadf7; font-weight:bold; margin-left:0px">Edit&nbsp;&nbsp;</a><br/>
+                        <a href="#" style="color:#ff6b6b; font-weight:bold; margin-left:0px">Delete&nbsp;&nbsp;</a>
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+      </div>
+      <br/><br/><br/><br/><br/><br/>

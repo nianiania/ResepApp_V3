@@ -4,6 +4,10 @@ var path = require('path')
 var bodyParse = require('body-parser')
 var exphbs = require('express-handlebars')
 var cookieParser = require('cookie-parser')
+var multer  = require('multer')
+var upload = multer({ dest: 'public/uploads/' })
+var fs = require('fs');
+
 
 app.use(bodyParse.urlencoded({ extended: true }));
 app.use(bodyParse.json());
@@ -130,14 +134,98 @@ app.route('/signin')
 
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(function(result) {
-                console.log('Success auth: ', result.email);
                 res.cookie('uid_token', result.uid, { maxAge: expired });
-                // res.redirect('/');
-                res.send("sukses login");
+                console.log('Success auth: ', result.email);
+                res.redirect("/admin");
             }).catch(function(error) {
                 console.log("Error Loggin In User :", error.message);
             });
     })
+
+
+
+
+app.route('/admin')
+    .get(function(req, res) {
+        if(req.cookies.uid_token){ 
+            pool.query('SELECT * from resep')
+            .then((result) => {
+                var hasil = result.rows
+                console.log('number:', hasil);
+
+                res.render('admin', {
+                    data: hasil,
+                    judul: 'Resep App with NodeJS'
+                })
+            })
+            .catch((err) => {
+                console.error('error running query', err);
+            });
+
+
+        } else {
+            res.send('You have to signin to access this page!')
+        }
+    })
+    .post(function(req, res) {
+        
+    })
+
+
+
+
+
+// ========================= Routing '/add_resep' ========================================== 
+app.get('/add_resep', function(req, res){
+    res.render('add_resep')
+})
+app.post('/add_resep', upload.any(), function(req, res){
+    var nama_resep = req.body.nama_resep || ""
+    var deskripsi = req.body.deskripsi || ""
+    var penulis = req.body.penulis || ""
+    var cara_pembuatan = req.body.cara_pembuatan || ""
+    var image = req.files[0] || ""
+
+    // console.log(nama_resep + ' ' + deskripsi + ' ' + penulis + ' ' + cara_pembuatan)
+    console.log(image)
+
+    if(req.cookies.uid_token){
+
+
+        if(image){
+            fs.rename(image.path, image.path + '.jpg', function(err) {
+            if (err)
+              console.log('ERROR: ' + err);
+            }
+          );
+
+        } 
+
+        if(nama_resep && deskripsi && penulis && cara_pembuatan){
+            // console.log('trus')
+            var image_path = image.path + ".jpg" || "";
+            var konversi_imagePath = image_path.substring(6)
+            console.log('Path: ', konversi_imagePath)
+
+            var query_post = 'insert into resep(nama_resep, deskripsi, penulis, cara_pembuatan, image)' + 'values($1, $2, $3, $4, $5)'
+            pool.query(query_post, [nama_resep, deskripsi, penulis, cara_pembuatan, konversi_imagePath])
+                .then((result) => {
+                    console.log('success insert data');
+                    res.redirect('/admin')
+                })
+                .catch((err) => {
+                    console.log('error running query', err);
+                })
+
+        } else {
+            res.send('Nama Resep, Deskripsi, Penulis, dan Cara Pembuatan cannot be empty!')
+        }
+
+    } else {
+        res.send('You have to signin to post to the DB!')
+    }
+})
+// ========================= Routing '/add_resep' ==========================================
 
 
 app.route('/signout')

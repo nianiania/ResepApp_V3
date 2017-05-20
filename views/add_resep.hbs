@@ -1,0 +1,92 @@
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/admin">Resep App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">  
+            <li><a href="#">Add Resep</a></li> 
+            <li><a href="/signout">Sign Out</a></li>
+          </ul> 
+        </div>
+      </div>
+    </nav>
+
+
+
+
+
+
+    <div class="container">  
+        <div class="jumbotron">
+            <form action="/add_resep" method="POST" class="form-horizontal" enctype="multipart/form-data"> 
+
+                <div class="form-group">
+                    <label for="image" class="col-sm-2 control-label">Image</label>
+                    <div class="col-sm-7">
+                        <input type="file" class="file" name="image" data-show-preview="false">
+                    </div>
+                </div> 
+
+        
+                <div class="form-group">
+                    <label for="nama_resep" class="col-sm-2 control-label">Nama Resep</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" name="nama_resep" placeholder="Nama Resep">
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label for="deskripsi" class="col-sm-2 control-label">Deskripsi</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" name="deskripsi" placeholder="Deskripsi">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="penulis" class="col-sm-2 control-label">Penulis</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" name="penulis" placeholder="Penulis">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cara_pembuatan" class="col-sm-2 control-label">Cara Pembuatan</label>
+                    <div class="col-sm-7">
+                        <textarea class="form-control" rows="3" name="cara_pembuatan"></textarea>
+                        
+                        <br/>
+                        <input class="btn btn-success" type="submit" value="Submit">
+                    </div>
+                </div> 
+            </form>  
+        </div>
+
+
+
+
+
+
+        <div class="row">
+            {{#each data}}
+            <div class="col-sm-6 col-md-4">
+                <a href="/detail_resep?id={{id}}">
+                    <div class="thumbnail" style="background-color:#dbe4ff">
+                        <div class="caption">
+                            <h3 style="font-weight:bold">{{nama_resep}}</h3>
+                            <p style="margin-top:-10px">by{{penulis}}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+           {{/each}}
+        </div>
+
+        <br/><br/> 
+</div> 
