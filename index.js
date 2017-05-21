@@ -268,10 +268,6 @@ app.post('/add_resep', upload.any(), function(req, res){
 
 app.route('/signout')
     .get(function(req, res) {
-
-
-    })
-    .post(function(req, res) {
         console.log(req.cookies.uid_token)
 
         firebase.auth().signOut()
@@ -281,7 +277,11 @@ app.route('/signout')
                 res.redirect('/');
             }, (error) => {
                 console.log(error);
-            })
+            }) 
+
+    })
+    .post(function(req, res) {
+       
     })
 
 
